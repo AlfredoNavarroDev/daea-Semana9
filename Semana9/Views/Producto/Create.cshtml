@@ -1,0 +1,72 @@
+@model Semana9.Models.Producto
+
+@{
+    ViewData["Title"] = "Nuevo producto";
+}
+
+<h1>Nuevo producto</h1>
+
+<h4>Producto</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post">
+
+            @* ValidationSummary al INICIO del formulario: junta en una sola
+               lista TODOS los errores de ModelState (los de los atributos
+               del modelo + el error de "codigo duplicado" agregado a mano
+               en el controlador). excludePropertyErrors=false -> muestra todo. *@
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Codigo" class="control-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                @* ValidationMessageFor (Tag Helper asp-validation-for): muestra
+                   el mensaje de error SOLO de este campo, junto al input. *@
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Stock" class="control-label"></label>
+                <input asp-for="Stock" class="form-control" />
+                <span asp-validation-for="Stock" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="CorreoProveedor" class="control-label"></label>
+                <input asp-for="CorreoProveedor" class="form-control" />
+                <span asp-validation-for="CorreoProveedor" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @* Activa la validacion en el CLIENTE (JavaScript):
+       jquery.validate + jquery.validate.unobtrusive leen los atributos
+       data-val-* que el Tag Helper asp-for genero a partir de las
+       Data Annotations del modelo, y muestran los mismos mensajes de
+       error SIN recargar la pagina ni llegar al servidor.
+       Si se quita este partial (o se desactiva JavaScript en el navegador),
+       esta validacion de cliente desaparece, pero el servidor sigue
+       revisando ModelState.IsValid en el POST -> por eso la validacion
+       SIEMPRE debe existir tambien en el servidor. *@
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

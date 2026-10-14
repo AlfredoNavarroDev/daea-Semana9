@@ -1,0 +1,35 @@
+@model IEnumerable<Semana9.Models.Producto>
+
+@{
+    ViewData["Title"] = "Productos";
+}
+
+<h1>Productos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Nuevo producto</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(m => m.Codigo)</th>
+            <th>@Html.DisplayNameFor(m => m.Nombre)</th>
+            <th>@Html.DisplayNameFor(m => m.Precio)</th>
+            <th>@Html.DisplayNameFor(m => m.Stock)</th>
+            <th>@Html.DisplayNameFor(m => m.CorreoProveedor)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.Codigo</td>
+                <td>@producto.Nombre</td>
+                <td>@producto.Precio.ToString("C2")</td>
+                <td>@producto.Stock</td>
+                <td>@producto.CorreoProveedor</td>
+            </tr>
+        }
+    </tbody>
+</table>
